@@ -1,0 +1,2 @@
+2026-07-06T10:08:06.855067 tests/test_pre_hil_testing.py::RegressionTest::test_reach_connected_state setup failed 47.2728819148615
+2026-07-06T10:08:56.642344 tests/test_pre_hil_testing.py::RegressionTest::test_reach_connected_state teardown passed 0.0009616604074835777

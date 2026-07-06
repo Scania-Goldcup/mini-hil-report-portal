@@ -1,0 +1,37 @@
+2026-07-06T10:07:55.799 - conftest INFO Starting sessionstart
+2026-07-06T10:07:55.800 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:07:55.801 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:07:55.802 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:07:55.803 - conftest INFO Starting to initialize devices
+2026-07-06T10:07:58.310 - conftest INFO Finished initializing devices
+2026-07-06T10:08:05.995 - minions.api INFO DUT IP discovered after 7.7 seconds
+2026-07-06T10:08:06.024 - conftest INFO SW info below:
+ACO: ec7de5b
+SCO: 
+SCO (BL): 
+HSE: 2.40.0
+Unknown_7: 
+ACO (RCSW): d8b746f+
+2026-07-06T10:08:06.025 - conftest INFO Test SW version in voltmap is ff77ff4
+2026-07-06T10:08:06.042 - conftest INFO Finnished with sessionstart, took 10.2 seconds
+
+2026-07-06T10:08:06.931 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:08:06.994 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:08:07.060 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:08:07.062 - minions.actions INFO Setting rig to default state
+2026-07-06T10:08:09.553 - minions.actions INFO Finished setting rig to default state, took 2.5 seconds
+2026-07-06T10:08:09.554 - minions.actions INFO Starting to set DUT to a default operational state
+2026-07-06T10:08:09.972 - minions.api INFO DUT IP discovered after 0.4 seconds
+2026-07-06T10:08:10.057 - minions.actions INFO DUT software version matches expected, skipping flashing
+2026-07-06T10:08:11.534 - devices.nvp INFO Parametrization of 5 parameters done
+2026-07-06T10:08:11.534 - devices.nvp INFO Clearing persistent counters
+2026-07-06T10:08:28.565 - minions.actions INFO Clearing errorcodes (current implementation is trying to clear all active errorcodes)...
+2026-07-06T10:08:28.586 - minions.actions INFO Not clearing errorcode RTDB_FAULT_CLEARING_ERRORCODE with system reaction 512
+2026-07-06T10:08:28.587 - minions.actions INFO Not clearing errorcode RTDB_SCO_MANAGER_ERRORCODE with system reaction 512
+2026-07-06T10:08:28.587 - minions.actions INFO Not clearing errorcode RTDB_HW_IMPROPER_COMMISSIONING_ERRORCODE with system reaction 0
+2026-07-06T10:08:28.587 - minions.actions INFO Not clearing errorcode RTDB_EXTERNAL_CAN_TIMEOUT_ERRORCODE with system reaction 512
+2026-07-06T10:08:28.587 - minions.actions INFO Powercycling DUT...
+2026-07-06T10:08:39.081 - minions.api INFO Took 10.5 seconds for soft shutdown
+2026-07-06T10:08:53.610 - minions.api INFO DUT IP discovered after 4.0 seconds
+2026-07-06T10:08:56.650 - conftest INFO Starting teardown
+2026-07-06T10:09:12.334 - minions.devices.lock INFO Lock file removed

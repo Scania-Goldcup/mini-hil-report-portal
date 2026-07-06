@@ -1,0 +1,112 @@
+2026-07-06T10:10:13.974 - conftest INFO Starting sessionstart
+2026-07-06T10:10:13.976 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:10:13.977 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:10:13.978 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:10:13.979 - conftest INFO Starting to initialize devices
+2026-07-06T10:10:16.471 - conftest INFO Finished initializing devices
+2026-07-06T10:10:16.478 - conftest INFO Flashing test software to the DUT
+2026-07-06T10:10:16.499 - minions.actions INFO Flashing BCO...
+2026-07-06T10:10:27.303 - devices.jlink INFO jtag flashed successfully
+2026-07-06T10:10:27.303 - minions.actions INFO Flashing BCO took 10.8 seconds
+2026-07-06T10:10:27.303 - minions.actions INFO Flashing SCO bootloader...
+2026-07-06T10:10:27.304 - minions.api INFO Performing hard reset
+2026-07-06T10:11:04.965 - minions.api INFO DUT IP discovered after 0.4 seconds
+2026-07-06T10:11:04.965 - root INFO Flashing SCO with command: ['/tmp/tmprt_9plut/files_for_next_test_suite/np-client-x86-linux', '--ip', '192.168.1.101', 'flash', '--sco-bl', '/tmp/tmprt_9plut/files_for_next_test_suite/BOOTBOMB_APPL_ff77ff4.bin', '-m', 'BMS++', '--eta-logger=false'] and np-client version: 2.12.2
+2026-07-06T10:12:19.980 - devices.nvp INFO Flashing returncode: CompletedProcess(args=['/tmp/tmprt_9plut/files_for_next_test_suite/np-client-x86-linux', '--ip', '192.168.1.101', 'flash', '--sco-bl', '/tmp/tmprt_9plut/files_for_next_test_suite/BOOTBOMB_APPL_ff77ff4.bin', '-m', 'BMS++', '--eta-logger=false'], returncode=0, stdout='Flashing SCO bootloader at 0x0\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \nWaiting for installation to complete...\nFlash successful\n', stderr='')
+2026-07-06T10:12:54.995 - minions.actions INFO Flashing SCO bootloader took 147.7 seconds
+2026-07-06T10:12:54.996 - minions.actions INFO Flashing SCO application...
+2026-07-06T10:13:05.493 - minions.api INFO Took 10.5 seconds for soft shutdown
+2026-07-06T10:13:05.989 - devices.xds110 INFO Starting to flash with XDS110: /tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin
+2026-07-06T10:13:05.990 - devices.xds110 INFO Trying to flash with command: ['/opt/ti/uniflash_9.4.1/dslite.sh', '--mode', 'flash', '--config=/home/alex/BMS_Minions/minions/devices/RM48L952.ccxml', '--verbose', '-l /home/alex/BMS_Minions/minions/devices/generated.ufsettings', '/tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin,0x40000']
+2026-07-06T10:13:06.399 - minions.api INFO XDS110 flashing SCO failed on attempt 1/3: device error; failed to flash with XDS110: /tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin; Failed: IcePick: Error initializing emulator: (Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the XDS110SupportReadMe.pdf
+file there for instructions.
+(Emulation package 20.4.0.3835)
+
+
+.Rebooting and trying again...
+2026-07-06T10:13:16.911 - minions.api INFO Took 10.5 seconds for soft shutdown
+2026-07-06T10:13:17.594 - devices.xds110 INFO Starting to flash with XDS110: /tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin
+2026-07-06T10:13:17.596 - devices.xds110 INFO Trying to flash with command: ['/opt/ti/uniflash_9.4.1/dslite.sh', '--mode', 'flash', '--config=/home/alex/BMS_Minions/minions/devices/RM48L952.ccxml', '--verbose', '-l /home/alex/BMS_Minions/minions/devices/generated.ufsettings', '/tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin,0x40000']
+2026-07-06T10:13:18.008 - minions.api INFO XDS110 flashing SCO failed on attempt 2/3: device error; failed to flash with XDS110: /tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin; Failed: IcePick: Error initializing emulator: (Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the XDS110SupportReadMe.pdf
+file there for instructions.
+(Emulation package 20.4.0.3835)
+
+
+.Rebooting and trying again...
+2026-07-06T10:13:34.539 - minions.api INFO Took 16.5 seconds for soft shutdown
+2026-07-06T10:13:35.423 - devices.xds110 INFO Starting to flash with XDS110: /tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin
+2026-07-06T10:13:35.423 - devices.xds110 INFO Trying to flash with command: ['/opt/ti/uniflash_9.4.1/dslite.sh', '--mode', 'flash', '--config=/home/alex/BMS_Minions/minions/devices/RM48L952.ccxml', '--verbose', '-l /home/alex/BMS_Minions/minions/devices/generated.ufsettings', '/tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin,0x40000']
+2026-07-06T10:13:35.833 - minions.api INFO XDS110 flashing SCO failed on attempt 3/3: device error; failed to flash with XDS110: /tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin; Failed: IcePick: Error initializing emulator: (Error -260 @ 0x0)
+An attempt to connect to the XDS110 failed.
+The cause may be one or more of: no XDS110 is connected, invalid
+firmware update, invalid XDS110 serial number, or faulty USB
+cable. The firmware and serial number may be updated using the
+xdsdfu utility found in the .../ccs_base/common/uscif/xds110
+directory of your installation. View the XDS110SupportReadMe.pdf
+file there for instructions.
+(Emulation package 20.4.0.3835)
+
+
+.Rebooting and trying again...
+2026-07-06T10:13:35.833 - minions.actions WARNING Flashing SCO with xds110 failed: device error; Failed to flash SCO after multiple attempts
+2026-07-06T10:13:35.833 - minions.actions INFO Trying to flash SCO with np-client instead
+2026-07-06T10:13:35.833 - minions.api INFO Performing hard reset
+2026-07-06T10:14:08.378 - minions.api INFO DUT IP discovered after 5.3 seconds
+2026-07-06T10:14:08.379 - root INFO Flashing SCO with command: ['/tmp/tmprt_9plut/files_for_next_test_suite/np-client-x86-linux', '--ip', '192.168.1.101', 'flash', '--sco', '/tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin', '-m', 'BMS++', '--eta-logger=false'] and np-client version: 2.12.2
+2026-07-06T10:14:43.775 - devices.nvp INFO Flashing returncode: CompletedProcess(args=['/tmp/tmprt_9plut/files_for_next_test_suite/np-client-x86-linux', '--ip', '192.168.1.101', 'flash', '--sco', '/tmp/tmprt_9plut/files_for_next_test_suite/SCO_target_ff77ff4.bin', '-m', 'BMS++', '--eta-logger=false'], returncode=0, stdout='Flashing SCO application at 0x0\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \nWaiting for installation to complete...\nFlash successful\n', stderr='')
+2026-07-06T10:14:53.783 - minions.actions INFO Flashing SCO took 118.8 seconds
+2026-07-06T10:14:53.784 - minions.actions INFO Flashing BCO again with np-client to ensure correct flashing procedure...
+2026-07-06T10:14:53.785 - root INFO Flashing BCO with command: ['/tmp/tmprt_9plut/files_for_next_test_suite/np-client-x86-linux', '--ip', '192.168.1.101', 'flash', '--bco', '/tmp/tmprt_9plut/files_for_next_test_suite/bco-cod-debug-ff77ff4.bin', '-m', 'BMS++', '--eta-logger=false'] and np-client version: 2.12.2
+2026-07-06T10:16:08.326 - devices.nvp INFO Flashing returncode: CompletedProcess(args=['/tmp/tmprt_9plut/files_for_next_test_suite/np-client-x86-linux', '--ip', '192.168.1.101', 'flash', '--bco', '/tmp/tmprt_9plut/files_for_next_test_suite/bco-cod-debug-ff77ff4.bin', '-m', 'BMS++', '--eta-logger=false'], returncode=0, stdout='Flashing BCO application at 0x0\n0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100% \nWaiting for installation to complete...\nFlash successful\n', stderr='')
+2026-07-06T10:16:18.331 - minions.actions INFO Verifying flashed software version on DUT...
+2026-07-06T10:16:42.173 - minions.api INFO DUT IP discovered after 2.8 seconds
+2026-07-06T10:16:42.195 - minions.actions INFO Finished flashing software version ff77ff4 to the DUT
+2026-07-06T10:16:43.502 - devices.nvp INFO Parametrization of 5 parameters done
+2026-07-06T10:16:59.015 - minions.api INFO Took 10.5 seconds for soft shutdown
+2026-07-06T10:17:12.352 - minions.api INFO DUT IP discovered after 2.8 seconds
+2026-07-06T10:17:12.789 - minions.api INFO DUT IP discovered after 0.4 seconds
+2026-07-06T10:17:12.805 - conftest INFO SW info below:
+ACO: ff77ff4
+SCO: ff77ff4        
+SCO (BL): ff77ff4        
+HSE: 2.40.0
+Unknown_7: 
+ACO (RCSW): d8b746f+
+2026-07-06T10:17:12.805 - conftest INFO Test SW version in voltmap is ff77ff4
+2026-07-06T10:17:12.818 - conftest INFO Finnished with sessionstart, took 418.8 seconds
+
+2026-07-06T10:17:13.492 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:17:13.548 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:17:13.616 - can.interfaces.socketcan.socketcan INFO Created a socket
+2026-07-06T10:17:13.617 - minions.actions INFO Setting rig to default state
+2026-07-06T10:17:16.139 - minions.actions INFO Finished setting rig to default state, took 2.5 seconds
+2026-07-06T10:17:16.139 - minions.actions INFO Starting to set DUT to a default operational state
+2026-07-06T10:17:16.557 - minions.api INFO DUT IP discovered after 0.4 seconds
+2026-07-06T10:17:16.626 - minions.actions INFO DUT software version matches expected, skipping flashing
+2026-07-06T10:17:18.224 - devices.nvp INFO Parametrization of 5 parameters done
+2026-07-06T10:17:18.224 - devices.nvp INFO Clearing persistent counters
+2026-07-06T10:17:35.268 - minions.actions INFO Clearing errorcodes (current implementation is trying to clear all active errorcodes)...
+2026-07-06T10:17:35.313 - minions.actions INFO Not clearing errorcode RTDB_FAULT_CLEARING_ERRORCODE with system reaction 512
+2026-07-06T10:17:35.313 - minions.actions INFO Powercycling DUT...
+2026-07-06T10:17:45.812 - minions.api INFO Took 10.5 seconds for soft shutdown
+2026-07-06T10:18:00.373 - minions.api INFO DUT IP discovered after 4.1 seconds
+2026-07-06T10:18:00.552 - minions.actions INFO Finished setting DUT to default state, took 44.4 seconds
+2026-07-06T10:18:00.553 - minions.actions INFO DUT is operational and disconnected, exiting prepare_dut_for_testing
+2026-07-06T10:18:00.555 - test_pre_hil_testing INFO Testing if the DUT can reach the CONNECTED state...
+2026-07-06T10:18:00.555 - test_pre_hil_testing INFO Verifying DUT is disconnected initially.
+2026-07-06T10:18:00.643 - test_pre_hil_testing INFO Setting up and starting periodic CAN message 'PropB_01'.
+2026-07-06T10:18:00.645 - test_pre_hil_testing INFO Waiting up to 60s for the DUT to connect...
+2026-07-06T10:18:02.927 - conftest INFO Starting teardown
+2026-07-06T10:18:14.825 - minions.devices.lock INFO Lock file removed

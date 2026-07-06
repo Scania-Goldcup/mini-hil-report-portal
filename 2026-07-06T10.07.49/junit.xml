@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="60.850" timestamp="2026-07-06T10:07:55.799050" hostname="bob"><properties><property name="project" value="nextgen" /><property name="minion" value="bob" /><property name="sw_version.ACO" value="ec7de5b" /><property name="sw_version.SCO" value="" /><property name="sw_version.SCO (BL)" value="" /><property name="sw_version.HSE" value="2.40.0" /><property name="sw_version.Unknown_7" value="" /><property name="sw_version.ACO (RCSW)" value="d8b746f+" /></properties><testcase classname="tests.test_pre_hil_testing.RegressionTest" name="test_reach_connected_state" time="47.274"><error message="failed on setup with &quot;TimeoutError: No CAN message with frame_id 217093833 received within 0.5 seconds.&quot;">request = &lt;SubRequest 'test_run' for &lt;TestCaseFunction test_reach_connected_state&gt;&gt;
+
+    @pytest.fixture
+    def test_run(request):
+        # We pass the request object so that test names can be used for logging.
+        skip_flashing = request.config.getoption("--skip-flashing")
+    
+        testcase_report_dir = os.path.join(api.report_dir, request.node.name)
+        testcase_prepare_dut_for_testing_dir = os.path.join(testcase_report_dir, "prepare_dut_for_testing")
+        os.makedirs(testcase_prepare_dut_for_testing_dir, exist_ok=True)
+    
+        # Fix for B-sample issue where the CAN inteface can be left in a bad state after test cases that do flashing
+        api.can_restart_interface()
+    
+        api.can_start_logging(testcase_prepare_dut_for_testing_dir)
+&gt;       actions.prepare_dut_for_testing(request, skip_flashing=skip_flashing)
+
+conftest.py:356: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+minions/actions.py:189: in prepare_dut_for_testing
+    operational_state = self.api.can_read_signal(CAN_HVESS_OPERATIONAL_STATUS, raw_value=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;minions.api.API object at 0x7fc00a5154b0&gt;
+signal_name = 'HVESS_Operational_Status', timeout = 0.5, rx_tx = 'rx', raw_value = True
+
+    def can_read_signal(self, signal_name, timeout=0.5, rx_tx="rx", raw_value=False):
+        """
+        Reads a CAN signal by name using the DBC and returns its value.
+        If raw_value=True, returns the raw integer value, otherwise returns the DBC-decoded value (string if available).
+        """
+        # Find the message containing the signal
+        for message in self.hal.canbus.vehicle.db.messages:
+            if signal_name in [s.name for s in message.signals]:
+                msg = message
+                break
+        else:
+            raise ValueError(f"Signal '{signal_name}' not found in DBC.")
+    
+        # Receive the CAN message
+        data = self.can_recv(msg.frame_id, timeout, rx_tx)
+        if data is None:
+&gt;           raise TimeoutError(f"No CAN message with frame_id {msg.frame_id} received within {timeout} seconds.")
+E           TimeoutError: No CAN message with frame_id 217093833 received within 0.5 seconds.
+
+minions/api.py:683: TimeoutError</error></testcase></testsuite></testsuites>
