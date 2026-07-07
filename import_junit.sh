@@ -45,19 +45,19 @@ echo "Authenticated successfully."
 import_file() {
     local file="$1"
     local name="$2"
+
     echo "Importing: ${file} as '${name}'..."
 
-    local IMPORT_ARGS=(-F "file=@${file}")
+    IMPORT_ARGS=(-F "file=@${file}")
+
     if [ -n "$name" ]; then
-        IMPORT_ARGS+=(-F "launchImportRq={\"launchName\": \"${name}\"};type=application/json")
+        IMPORT_ARGS+=(-F "launchImportRq={\"launchName\":\"${name}\"};type=application/json")
     fi
 
-    RESPONSE=$(curl -sf -X POST \
+    curl -sf -X POST \
         "${RP_URL}/api/v1/plugin/${RP_PROJECT}/${RP_PLUGIN}/import" \
         -H "Authorization: Bearer ${TOKEN}" \
-        "${IMPORT_ARGS[@]}")
-
-    echo "  Result: ${RESPONSE}"
+        "${IMPORT_ARGS[@]}"
 }
 
 # Import single file or directory
