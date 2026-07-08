@@ -57,6 +57,38 @@ get_run_id_from_path() {
     fi
 }
 
+get_short_file_hash() {
+    local file="$1"
+    local hash
+
+    hash=$(sha256sum "$file")
+    hash="${hash%% *}"
+    echo "${hash:0:${RP_HASH_LENGTH:-12}}"
+}
+
+file_hash_exists_in_reportportal() {
+    local hash="$1"
+    local response
+
+    if ! response=$(curl -sfS -G \
+        "${RP_URL}/api/v1/${RP_PROJECT}/launch" \
+        -H "Authorization: Bearer ${TOKEN}" \
+        --data-urlencode "filter.has.attributeValue=${hash}" \
+        --data-urlencode "page.size=1"); then
+        echo "WARNING: Could not check ReportPortal for file-hash=${hash}"
+        return 1
+    fi
+
+    grep -q "\"value\":\"${hash}\"" <<< "$response"
+}
+
+add_short_hash_attribute() {
+    local hash="$1"
+
+    [ -n "$attrs" ] && attrs+=","
+    attrs+="{\"key\":\"file-hash\",\"value\":\"${hash}\"}"
+}
+
 # Function to import a single file
 # Function to import a single file
 import_file() {
@@ -64,6 +96,14 @@ import_file() {
     local name="$2"
 
     echo "Importing: ${file} as '${name}'..."
+
+    local file_hash
+    file_hash=$(get_short_file_hash "$file")
+
+    if file_hash_exists_in_reportportal "$file_hash"; then
+        echo "Skipping duplicate: file-hash=${file_hash}"
+        return 0
+    fi
 
     # Attributes to promote from XML to launch attributes
     local launch_keys=(minion sw_version.ACO speed_run skip_flashing)
@@ -77,6 +117,8 @@ import_file() {
     if [ -n "$run_id" ]; then
         attrs+="{\"key\":\"run-id\",\"value\":\"${run_id}\"}"
     fi
+
+    add_short_hash_attribute "$file_hash"
 
     # Add attributes from XML
     for key in "${launch_keys[@]}"; do
@@ -102,8 +144,9 @@ import_file() {
     launchImportRq+="}"
 
     echo "launchImportRq: ${launchImportRq}"
+    echo "Uploading to ReportPortal..."
 
-    curl -sf -X POST \
+    curl -sfS -X POST \
         "${RP_URL}/api/v1/plugin/${RP_PROJECT}/${RP_PLUGIN}/import" \
         -H "Authorization: Bearer ${TOKEN}" \
         -F "file=@${file}" \
