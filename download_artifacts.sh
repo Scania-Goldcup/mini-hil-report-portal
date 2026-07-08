@@ -1,11 +1,26 @@
+#!/bin/bash
+set -euo pipefail
 
 # go into downloaded_artifacts directory
 mkdir -p downloaded_artifacts
 cd downloaded_artifacts || exit 1
 
-# Make variable for the repository to fetch artifacts from
-REPO="scania-goldcup/bms_minions"
-OLDEST_DATE="2026-07-07T00:00:00Z"
+DEFAULT_REPOS=(
+    "scania-goldcup/bms_minions"
+    "scania-goldcup/bms-pp"
+)
+
+OLDEST_DATE="${OLDEST_DATE:-2026-07-08T00:00:00Z}"
+RUN_LIMIT="${RUN_LIMIT:-300}"
+ARTIFACT_PATTERN="${ARTIFACT_PATTERN:-mini-hil}"
+
+if [ $# -gt 0 ]; then
+    REPOS=("$@")
+elif [ -n "${REPOS:-}" ]; then
+    read -r -a REPOS <<< "$REPOS"
+else
+    REPOS=("${DEFAULT_REPOS[@]}")
+fi
 
 has_junit_xml() {
     local dir="$1"
@@ -13,52 +28,53 @@ has_junit_xml() {
     find "$dir" -type f -name "*.xml" -exec grep -qE '<testsuites?[[:space:]>]' {} \; -print -quit | grep -q .
 }
 
-# Download all artifacts that are not already downloaded
-# First check if run 
-gh run list --repo "$REPO" --limit 100 --json databaseId \
-  --jq '.[].databaseId' |
-while read -r run_id; do
-    completed=$(gh run view "$run_id" --repo "$REPO" --json status --jq '.status')
-    if [ "$completed" != "completed" ]; then
-        echo "Run $run_id is not completed, skipping."
-        continue
-    fi
-    timestamp=$(gh run view "$run_id" --repo "$REPO" --json createdAt --jq '.createdAt')
-    if [[ "$timestamp" < "$OLDEST_DATE" ]]; then
-        echo "Run $run_id is older than $OLDEST_DATE, skipping."
-        continue
-    fi
-    run_name=$(gh run view "$run_id" --repo "$REPO" --json name --jq '.name')
-    echo "Processing run $run_id, with run name \"$run_name\" from timestamp $timestamp"
-    
-    # Create a directory for the run to block re-downloading the same run in the future
-    run_dir="run-$run_id"
-    # Check if the run has already been downloaded (run id is part of folder name)
-    if find . -maxdepth 1 -type d -name "*$run_id*" | grep -q .; then
-        echo "Run $run_id already downloaded, skipping."
-        continue
-    fi
-    mkdir -p "$run_dir"
+for REPO in "${REPOS[@]}"; do
+    echo "=== Downloading artifacts from $REPO ==="
 
-
-    gh api "repos/$REPO/actions/runs/$run_id/artifacts" \
-      --jq '.artifacts[] | .id' |
-    while read -r artifact_id; do
-        echo "  Found artifact $artifact_id"
-        run_id=$(gh api "repos/$REPO/actions/artifacts/$artifact_id" --jq '.workflow_run.id')
-        artifact_name=$(gh api "repos/$REPO/actions/artifacts/$artifact_id" --jq '.name')
-        folder_name="run-$run_id-artifact-$artifact_id"
-        # Only download artifacts that has "mini-hil" in the name
-        if ! echo "$artifact_name" | grep -Eiq "mini-hil"; then
-            echo "Skipping artifact $artifact_id ($artifact_name) as it does not match the pattern."
+    # Download all artifacts that are not already downloaded
+    gh run list --repo "$REPO" --limit "$RUN_LIMIT" --json databaseId \
+      --jq '.[].databaseId' |
+    while read -r run_id; do
+        completed=$(gh run view "$run_id" --repo "$REPO" --json status --jq '.status')
+        if [ "$completed" != "completed" ]; then
+            echo "Run $run_id is not completed, skipping."
             continue
         fi
+        timestamp=$(gh run view "$run_id" --repo "$REPO" --json createdAt --jq '.createdAt')
+        if [[ "$timestamp" < "$OLDEST_DATE" ]]; then
+            echo "Run $run_id is older than $OLDEST_DATE, stopping scan for $REPO."
+            break
+        fi
+        #run_name=$(gh run view "$run_id" --repo "$REPO" --json name --jq '.name')
+        #echo "Processing run $run_id, with run name \"$run_name\" from timestamp $timestamp"
 
-        # Download the artifact as a zip file
-        gh api \
-            -H "Accept: application/vnd.github+json" \
-            repos/$REPO/actions/artifacts/$artifact_id/zip \
-            > "$folder_name.zip"
+        # Create a directory for the run to block re-downloading the same run in the future
+        run_dir="run-$run_id"
+        # Check if the run has already been downloaded (run id is part of folder name)
+        if find . -maxdepth 1 -type d -name "*$run_id*" | grep -q .; then
+            echo "Run $run_id already downloaded, skipping."
+            continue
+        fi
+        mkdir -p "$run_dir"
+
+        gh api "repos/$REPO/actions/runs/$run_id/artifacts" \
+          --jq '.artifacts[] | .id' |
+        while read -r artifact_id; do
+            echo "  Found artifact $artifact_id"
+            run_id=$(gh api "repos/$REPO/actions/artifacts/$artifact_id" --jq '.workflow_run.id')
+            artifact_name=$(gh api "repos/$REPO/actions/artifacts/$artifact_id" --jq '.name')
+            folder_name="run-$run_id-artifact-$artifact_id"
+            # Only download artifacts that match the configured pattern
+            if ! echo "$artifact_name" | grep -Eiq "$ARTIFACT_PATTERN"; then
+                echo "Skipping artifact $artifact_id ($artifact_name) as it does not match the pattern."
+                continue
+            fi
+
+            # Download the artifact as a zip file
+            gh api \
+                -H "Accept: application/vnd.github+json" \
+                repos/$REPO/actions/artifacts/$artifact_id/zip \
+                > "$folder_name.zip"
             echo "Downloaded artifact $artifact_id"
             # Unzip the artifact
             unzip -o "$folder_name.zip" -d "$folder_name"
@@ -71,4 +87,5 @@ while read -r run_id; do
                 mkdir -p "$folder_name"
             fi
         done
+    done
 done
