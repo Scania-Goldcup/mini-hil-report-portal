@@ -4,15 +4,18 @@ mkdir -p downloaded_artifacts
 cd downloaded_artifacts || exit 1
 
 # Make variable for the repository to fetch artifacts from
-REPO="scania-goldcup/bms-pp"
+REPO="scania-goldcup/bms_minions"
 OLDEST_DATE="2026-07-07T00:00:00Z"
 
-# Remove all folders that are empty and has "artifact" in the name
-find . -type d -name "*artifact*" -empty -delete
+has_junit_xml() {
+    local dir="$1"
+
+    find "$dir" -type f -name "*.xml" -exec grep -qE '<testsuites?[[:space:]>]' {} \; -print -quit | grep -q .
+}
 
 # Download all artifacts that are not already downloaded
 # First check if run 
-gh run list --repo "$REPO" --limit 1000 --json databaseId \
+gh run list --repo "$REPO" --limit 100 --json databaseId \
   --jq '.[].databaseId' |
 while read -r run_id; do
     completed=$(gh run view "$run_id" --repo "$REPO" --json status --jq '.status')
@@ -61,9 +64,9 @@ while read -r run_id; do
             unzip -o "$folder_name.zip" -d "$folder_name"
             # Remove the zip file after extraction
             rm "$folder_name.zip"
-            # Remove if there is no .xml file in the extracted directory
-            if ! find "$folder_name" -type f -name "*.xml" | grep -q .; then
-                echo "No .xml files found in artifact $artifact_id, removing all content in directory."
+            # Remove if there is no JUnit XML file in the extracted directory
+            if ! has_junit_xml "$folder_name"; then
+                echo "No JUnit XML files found in artifact $artifact_id, removing all content in directory."
                 rm -rf "$folder_name"
                 mkdir -p "$folder_name"
             fi
