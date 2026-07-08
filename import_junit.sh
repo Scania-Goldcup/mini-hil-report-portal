@@ -41,6 +41,23 @@ fi
 
 echo "Authenticated successfully."
 
+get_xml_attribute() {
+    local file="$1"
+    local key="$2"
+
+    grep -oP "<property name=\"attribute\" value=\"${key}:\K[^\"]+" "$file" \
+        | head -n1 || true
+}
+
+get_run_id_from_path() {
+    local path="$1"
+
+    if [[ "$path" =~ run-([0-9]+)-artifact-[0-9]+ ]]; then
+        echo "${BASH_REMATCH[1]}"
+    fi
+}
+
+# Function to import a single file
 # Function to import a single file
 import_file() {
     local file="$1"
@@ -48,16 +65,49 @@ import_file() {
 
     echo "Importing: ${file} as '${name}'..."
 
-    IMPORT_ARGS=(-F "file=@${file}")
+    # Attributes to promote from XML to launch attributes
+    local launch_keys=(minion sw_version.ACO speed_run skip_flashing)
+
+    local attrs=""
+
+    # Add run-id from folder/path, if present
+    local run_id
+    run_id=$(get_run_id_from_path "$file")
+
+    if [ -n "$run_id" ]; then
+        attrs+="{\"key\":\"run-id\",\"value\":\"${run_id}\"}"
+    fi
+
+    # Add attributes from XML
+    for key in "${launch_keys[@]}"; do
+        value=$(get_xml_attribute "$file" "$key")
+        if [ -n "$value" ]; then
+            [ -n "$attrs" ] && attrs+=","
+            attrs+="{\"key\":\"${key}\",\"value\":\"${value}\"}"
+        fi
+    done
+
+    # Build launchImportRq JSON
+    local launchImportRq="{"
 
     if [ -n "$name" ]; then
-        IMPORT_ARGS+=(-F "launchImportRq={\"launchName\":\"${name}\"};type=application/json")
+        launchImportRq+="\"launchName\":\"${name}\""
     fi
+
+    if [ -n "$attrs" ]; then
+        [ -n "$name" ] && launchImportRq+=","
+        launchImportRq+="\"attributes\":[${attrs}]"
+    fi
+
+    launchImportRq+="}"
+
+    echo "launchImportRq: ${launchImportRq}"
 
     curl -sf -X POST \
         "${RP_URL}/api/v1/plugin/${RP_PROJECT}/${RP_PLUGIN}/import" \
         -H "Authorization: Bearer ${TOKEN}" \
-        "${IMPORT_ARGS[@]}"
+        -F "file=@${file}" \
+        -F "launchImportRq=${launchImportRq};type=application/json"
 }
 
 # Import single file or directory
