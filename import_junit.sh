@@ -95,8 +95,6 @@ import_file() {
     local file="$1"
     local name="$2"
 
-    echo "Importing: ${file} as '${name}'..."
-
     local file_hash
     file_hash=$(get_short_file_hash "$file")
 
@@ -105,8 +103,9 @@ import_file() {
         return 0
     fi
 
+    echo "Importing: ${file} as '${name}'..."
     # Attributes to promote from XML to launch attributes
-    local launch_keys=(minion sw_version.ACO speed_run skip_flashing)
+    local launch_keys=(minion git_branch repository sw_version.ACO speed_run skip_flashing)
 
     local attrs=""
 
