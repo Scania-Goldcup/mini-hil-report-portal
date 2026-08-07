@@ -13,6 +13,9 @@ DEFAULT_REPOS=(
 OLDEST_DATE="${OLDEST_DATE:-2026-07-08T00:00:00Z}"
 RUN_LIMIT="${RUN_LIMIT:-300}"
 ARTIFACT_PATTERN="${ARTIFACT_PATTERN:-mini-hil}"
+# Re-check this many most-recent completed runs even if they were previously marked complete.
+# This catches reruns that upload new artifacts under the same run ID without scanning all history.
+RECHECK_COMPLETED_RUNS_LIMIT="${RECHECK_COMPLETED_RUNS_LIMIT:-100}"
 
 if [ $# -gt 0 ]; then
     REPOS=("$@")
@@ -30,11 +33,13 @@ has_junit_xml() {
 
 for REPO in "${REPOS[@]}"; do
     echo "=== Downloading artifacts from $REPO ==="
+    run_index=0
 
     # Download all artifacts that are not already downloaded
     gh run list --repo "$REPO" --limit "$RUN_LIMIT" --json databaseId \
       --jq '.[].databaseId' |
     while read -r run_id; do
+        run_index=$((run_index + 1))
 
         #run_name=$(gh run view "$run_id" --repo "$REPO" --json name --jq '.name')
         #echo "Processing run $run_id, with run name \"$run_name\" from timestamp $timestamp"
@@ -43,8 +48,11 @@ for REPO in "${REPOS[@]}"; do
         # An empty run directory may be left behind by an interrupted download.
         run_dir="run-$run_id"
         if [ -f "$run_dir/.download-complete" ]; then
-            echo "Run $run_id already downloaded, skipping."
-            continue
+            if [ "$run_index" -gt "$RECHECK_COMPLETED_RUNS_LIMIT" ]; then
+                echo "Run $run_id already downloaded, skipping."
+                continue
+            fi
+            echo "Run $run_id already downloaded, re-checking recent run for new artifacts."
         fi
 
         completed=$(gh run view "$run_id" --repo "$REPO" --json status --jq '.status')
