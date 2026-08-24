@@ -1,0 +1,318 @@
+{
+  "summary": {
+    "total_files": 790,
+    "pmic_summary": {
+      "files": 12,
+      "tests": 48,
+      "failures": 21,
+      "errors": 3,
+      "skipped": 0,
+      "test_fail_error_rate": 0.5,
+      "file_any_fail_error_rate": 1.0
+    },
+    "non_pmic_summary": {
+      "files": 778,
+      "tests": 2814,
+      "failures": 137,
+      "errors": 336,
+      "skipped": 0,
+      "test_fail_error_rate": 0.16808813077469795,
+      "file_any_fail_error_rate": 0.39460154241645246
+    }
+  },
+  "suite_stats_top": [
+    {
+      "suite": "tests.test_long_tests.RegressionTest",
+      "pmic_files": 12,
+      "non_pmic_files": 175,
+      "pmic_share": 0.06417112299465241,
+      "total_files": 187
+    },
+    {
+      "suite": "tests.test_pre_hil_testing.RegressionTest",
+      "pmic_files": 12,
+      "non_pmic_files": 226,
+      "pmic_share": 0.05042016806722689,
+      "total_files": 238
+    },
+    {
+      "suite": "internal",
+      "pmic_files": 0,
+      "non_pmic_files": 139,
+      "pmic_share": 0.0,
+      "total_files": 139
+    },
+    {
+      "suite": "tests.bms-pp-tests.test_pre_hil_testing.RegressionTest",
+      "pmic_files": 0,
+      "non_pmic_files": 258,
+      "pmic_share": 0.0,
+      "total_files": 258
+    },
+    {
+      "suite": "tests.bms-pp-tests.test_long_tests.RegressionTest",
+      "pmic_files": 0,
+      "non_pmic_files": 37,
+      "pmic_share": 0.0,
+      "total_files": 37
+    },
+    {
+      "suite": "tests.test_debug_test_rig.RegressionTest",
+      "pmic_files": 0,
+      "non_pmic_files": 121,
+      "pmic_share": 0.0,
+      "total_files": 121
+    }
+  ],
+  "repo_delta": [
+    {
+      "repo": "BMS_Minions",
+      "pmic_count": 12,
+      "non_pmic_count": 301,
+      "pmic_share": 1.0,
+      "non_pmic_share": 0.38688946015424164,
+      "share_delta": 0.6131105398457584,
+      "total": 313
+    },
+    {
+      "repo": "unknown",
+      "pmic_count": 0,
+      "non_pmic_count": 257,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.33033419023136246,
+      "share_delta": -0.33033419023136246,
+      "total": 257
+    },
+    {
+      "repo": "bms-pp",
+      "pmic_count": 0,
+      "non_pmic_count": 220,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.2827763496143959,
+      "share_delta": -0.2827763496143959,
+      "total": 220
+    }
+  ],
+  "minion_delta": [
+    {
+      "minion": "bob",
+      "pmic_count": 8,
+      "non_pmic_count": 338,
+      "pmic_share": 0.6666666666666666,
+      "non_pmic_share": 0.43444730077120824,
+      "share_delta": 0.23221936589545839,
+      "total": 346
+    },
+    {
+      "minion": "jorge",
+      "pmic_count": 4,
+      "non_pmic_count": 351,
+      "pmic_share": 0.3333333333333333,
+      "non_pmic_share": 0.45115681233933164,
+      "share_delta": -0.11782347900599832,
+      "total": 355
+    },
+    {
+      "minion": "stuart",
+      "pmic_count": 0,
+      "non_pmic_count": 80,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.10282776349614396,
+      "share_delta": -0.10282776349614396,
+      "total": 80
+    },
+    {
+      "minion": "unknown",
+      "pmic_count": 0,
+      "non_pmic_count": 9,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.011568123393316195,
+      "share_delta": -0.011568123393316195,
+      "total": 9
+    }
+  ],
+  "branch_delta": [
+    {
+      "branch": "main",
+      "pmic_count": 12,
+      "non_pmic_count": 166,
+      "pmic_share": 1.0,
+      "non_pmic_share": 0.2133676092544987,
+      "share_delta": 0.7866323907455013,
+      "total": 178
+    },
+    {
+      "branch": "unknown",
+      "pmic_count": 0,
+      "non_pmic_count": 161,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.2069408740359897,
+      "share_delta": -0.2069408740359897,
+      "total": 161
+    },
+    {
+      "branch": "develop",
+      "pmic_count": 0,
+      "non_pmic_count": 106,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.13624678663239073,
+      "share_delta": -0.13624678663239073,
+      "total": 106
+    },
+    {
+      "branch": "HEAD",
+      "pmic_count": 0,
+      "non_pmic_count": 88,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.11311053984575835,
+      "share_delta": -0.11311053984575835,
+      "total": 88
+    },
+    {
+      "branch": "HIL-759-Fix-multiple-runs-in-one-workflow",
+      "pmic_count": 0,
+      "non_pmic_count": 25,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.032133676092544985,
+      "share_delta": -0.032133676092544985,
+      "total": 25
+    },
+    {
+      "branch": "BNG-1719-nvm-parametrize-bco",
+      "pmic_count": 0,
+      "non_pmic_count": 12,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.015424164524421594,
+      "share_delta": -0.015424164524421594,
+      "total": 12
+    },
+    {
+      "branch": "HIL-768-reduce-test-suite-and-other-cleanup",
+      "pmic_count": 0,
+      "non_pmic_count": 11,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.014138817480719794,
+      "share_delta": -0.014138817480719794,
+      "total": 11
+    },
+    {
+      "branch": "HIL-764-add-testcase-for-flashing-with-jlink-and-tune-flashing-procedure",
+      "pmic_count": 0,
+      "non_pmic_count": 11,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.014138817480719794,
+      "share_delta": -0.014138817480719794,
+      "total": 11
+    },
+    {
+      "branch": "BNG-1719-implement-fee-and-non-blocking-writes",
+      "pmic_count": 0,
+      "non_pmic_count": 10,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.012853470437017995,
+      "share_delta": -0.012853470437017995,
+      "total": 10
+    },
+    {
+      "branch": "update-minions-to-3_9",
+      "pmic_count": 0,
+      "non_pmic_count": 10,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.012853470437017995,
+      "share_delta": -0.012853470437017995,
+      "total": 10
+    }
+  ],
+  "sco_delta": [
+    {
+      "sco": "0b18346#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 12,
+      "non_pmic_count": 49,
+      "pmic_share": 1.0,
+      "non_pmic_share": 0.06298200514138817,
+      "share_delta": 0.9370179948586118,
+      "total": 61
+    },
+    {
+      "sco": "ff77ff4#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 300,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.3856041131105398,
+      "share_delta": -0.3856041131105398,
+      "total": 300
+    },
+    {
+      "sco": "unknown",
+      "pmic_count": 0,
+      "non_pmic_count": 174,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.2236503856041131,
+      "share_delta": -0.2236503856041131,
+      "total": 174
+    },
+    {
+      "sco": "efd6eda#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 52,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.06683804627249357,
+      "share_delta": -0.06683804627249357,
+      "total": 52
+    },
+    {
+      "sco": "9ddf47d#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 14,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.017994858611825194,
+      "share_delta": -0.017994858611825194,
+      "total": 14
+    },
+    {
+      "sco": "f667eee#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 11,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.014138817480719794,
+      "share_delta": -0.014138817480719794,
+      "total": 11
+    },
+    {
+      "sco": "0c3c0c1#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 11,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.014138817480719794,
+      "share_delta": -0.014138817480719794,
+      "total": 11
+    },
+    {
+      "sco": "a1c6085#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 9,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.011568123393316195,
+      "share_delta": -0.011568123393316195,
+      "total": 9
+    },
+    {
+      "sco": "1a71fc1#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 6,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.007712082262210797,
+      "share_delta": -0.007712082262210797,
+      "total": 6
+    },
+    {
+      "sco": "80196f3#x00#x00#x00#x00#x00#x00#x00#x00",
+      "pmic_count": 0,
+      "non_pmic_count": 6,
+      "pmic_share": 0.0,
+      "non_pmic_share": 0.007712082262210797,
+      "share_delta": -0.007712082262210797,
+      "total": 6
+    }
+  ]
+}
